@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <title>Hello</title>
+        <style>
+
+
+            #app1 {
+                width: 300px;
+                background-color: yellow;
+                border: 2px;
+                border-style: dotted;
+                border-radius: 10px;
+                margin-bottom: 40px;
+                padding: 10px;
+            }
+
+            #app2 {
+                position: absolute;
+                left: 400px;
+                top: 10px;
+                width: 300px;
+                background-color: green;
+                border: 2px;
+                border-style: dotted;
+                border-radius: 10px;
+                margin-bottom: 40px;
+                padding: 20px;
+            }
+
+            #app3 {
+
+                width: 300px;
+                background-color: orange;
+                border: 2px;
+                border-style: dotted;
+                border-radius: 10px;
+                margin-bottom: 40px;
+                padding: 10px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="app1"></div>
+        <div id="app2"></div>
+        <div id="app3"></div>
+
+
+        <script type="text/babel">
+
+            function Hello(props) {
+              return (
+                <h1>Hello, {props.name}!</h1>
+              );
+            }
+
+            function App1() {
+                const x = 1;
+                const y = 2;
+
+                return (
+                    <div>
+                        <Hello name="Harry" />
+                        <Hello name="Ron" />
+                        <Hello name="Hermione" />
+                        hren {y+x} times!
+                    </div>
+                );
+            }
+
+            function App2() {
+
+                const [count, setCount] = React.useState(0);
+                function updateCount() {
+                    setCount(count+1);
+                }
+                return (
+                <div>
+                    <p></p>
+                    <p></p>
+                    <div>{count}</div>
+                    <button onClick={updateCount}>Count</button>
+                </div>
+                );
+            }
+
+            function App3() {
+
+                const [num1, setNum1] = React.useState(1);
+                const [num2, setNum2] = React.useState(2);
+                const [state, setState] = React.useState({
+                    num3:5,
+                    num4:10,
+                    response:"",
+                    score: 0
+                });
+
+                function updateResponse(event) {
+                    setState({
+                    num3: state.num3,
+                    num4: state.num4,
+                    response:event.target.value
+                    });
+                };
+
+                function inputKeyPress(event) {
+                    if (event.key === "Enter") {
+                        const answer = parseInt(state.response);
+                        if (state.num3 + state.num4 === answer) {
+                            //User got question right
+                            setState({
+                                ...state,
+                                score: state.score + 1
+                            });
+                        } else {
+                            //User got question wrong
+                            setState({
+                                ...state,
+                                score: state.score - 1
+                                });
+                            }
+                    }
+
+                }
+
+                return (
+                <div>
+                    <div>{num1} + {num2}</div>
+
+                    <p></p>
+                    <div>{state.num3} + {state.num4}</div>
+                    <input onKeyPress={inputKeyPress} onChange={updateResponse} value={state.response} />
+                    <div>Score: {state.score} </div>
+                </div>
+                );
+            }
+
+
+
+            ReactDOM.render(<App1 />, document.querySelector("#app1"));
+            ReactDOM.render(<App2 />, document.querySelector("#app2"));
+            ReactDOM.render(<App3 />, document.querySelector("#app3"));
+
+        </script>
+    </body>
+</html>
